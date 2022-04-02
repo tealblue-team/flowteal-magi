@@ -1,9 +1,9 @@
 # morefood-tools
 An affordable solution (starting at USD$100) to optimize water usage and increase yield in home gardening and small-scale farming.
 
-## Flow
+## How it works
 
-![image](https://user-images.githubusercontent.com/56868476/161388945-8892c236-7bcc-446d-8594-9cac4fdbe48f.png)
+![image](https://user-images.githubusercontent.com/56868476/161389045-cb006a11-fced-45e8-acaf-291a7a61ea16.png)
 
 ## Components
 Currently the solution consists of:
