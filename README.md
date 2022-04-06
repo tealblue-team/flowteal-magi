@@ -3,7 +3,7 @@ An affordable solution (starting at USD$99) to optimize water usage and increase
 
 ## How it works
 
-![morefood - Flow](https://user-images.githubusercontent.com/56868476/161389861-169a5ca6-3ec6-4abe-9c29-6871402825ce.jpg)
+![morefood_flow_small](https://user-images.githubusercontent.com/56868476/162023033-421634d0-22ca-4288-a4a3-cf30246a72a9.jpg)
 
 ## Components
 Currently the solution consists of:
