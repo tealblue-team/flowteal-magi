@@ -1,4 +1,4 @@
-# morefood-tools
+# Flowteal Magi
 An affordable solution (starting at USD$99) to optimize water usage and increase yield in home gardening and small-scale farming.
 
 ## How it works
@@ -15,4 +15,4 @@ Currently the solution consists of:
 - Boxes and cables $6
 
 ### Software
-- Morefood Tools - free and open source!
+- Flowteal Magi tools - free and open source!
