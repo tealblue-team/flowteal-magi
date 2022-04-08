@@ -10,8 +10,10 @@ Currently the solution consists of:
 
 ### Hardware
 - One WiFi-enabled controller for latching (bi-stable) electrovalves: [OpenSprinkler Bee](https://opensprinkler.com/product/opensprinkler-bee/) $58
-- One or more LoRa wireless soil moisture sensors: [MakerFabs LoRa Soil Moisture Sensor v2](https://www.makerfabs.com/lora-soil-moisture-sensor-v2.html) $17
-- One LoRa gateway: [Heltec WiFi LoRa 32 v2](https://heltec.org/project/wifi-lora-32/) $18
+- One or more LoRa wireless soil moisture sensors. Currently supported:
+    -  [MakerFabs LoRa Soil Moisture Sensor v2](https://www.makerfabs.com/lora-soil-moisture-sensor-v2.html) $17
+- One LoRa gateway. Currently supported:
+    -  [Heltec WiFi LoRa 32 v2](https://heltec.org/project/wifi-lora-32/) $18
 - Boxes and cables $6
 
 ### Software
