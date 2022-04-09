@@ -9,7 +9,8 @@ An affordable solution (starting at USD$99) to optimize water usage and increase
 Currently the solution consists of:
 
 ### Hardware
-- One WiFi-enabled controller for latching (bi-stable) electrovalves: [OpenSprinkler Bee](https://opensprinkler.com/product/opensprinkler-bee/) $58
+- One WiFi-enabled controller for latching (bi-stable) electrovalves. Currently supported:
+    -  [OpenSprinkler Bee](https://opensprinkler.com/product/opensprinkler-bee/) $58
 - One or more LoRa wireless soil moisture sensors. Currently supported:
     -  [MakerFabs LoRa Soil Moisture Sensor v2](https://www.makerfabs.com/lora-soil-moisture-sensor-v2.html) $17
 - One LoRa gateway. Currently supported:
