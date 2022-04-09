@@ -22,5 +22,7 @@ Currently the solution consists of:
 
 ### Useful resources
 - [Water content (Wikipedia)](https://en.wikipedia.org/wiki/Water_content)
+- [Soil mosture (Wikipedia)](https://en.wikipedia.org/wiki/Soil_moisture)
+- [Soil moisture sensors for irrigation scheduling](https://extension.umn.edu/irrigation/soil-moisture-sensors-irrigation-scheduling)
 - [Capacitive Soil Moisture Sensor Calibration with Arduino](https://makersportal.com/blog/2020/5/26/capacitive-soil-moisture-calibration-with-arduino)
 - [Measuring Soil Moisture with ADCs](https://circuitcellar.com/research-design-hub/measuring-soil-moisture-with-adcs/)
