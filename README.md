@@ -19,3 +19,6 @@ Currently the solution consists of:
 
 ### Software
 - Flowteal Magi tools - free and open source!
+
+### Useful resources
+- [Measuring Soil Moisture with ADCs](https://circuitcellar.com/research-design-hub/measuring-soil-moisture-with-adcs/)
