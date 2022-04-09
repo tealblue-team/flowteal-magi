@@ -21,5 +21,6 @@ Currently the solution consists of:
 - Flowteal Magi tools - free and open source!
 
 ### Useful resources
-- [Measuring Soil Moisture with ADCs](https://circuitcellar.com/research-design-hub/measuring-soil-moisture-with-adcs/)
+- [Water content (Wikipedia)](https://en.wikipedia.org/wiki/Water_content)
 - [Capacitive Soil Moisture Sensor Calibration with Arduino](https://makersportal.com/blog/2020/5/26/capacitive-soil-moisture-calibration-with-arduino)
+- [Measuring Soil Moisture with ADCs](https://circuitcellar.com/research-design-hub/measuring-soil-moisture-with-adcs/)
