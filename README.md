@@ -21,8 +21,13 @@ Currently the solution consists of:
 - Flowteal Magi tools - free and open source!
 
 ### Useful resources
+
+#### Soil Mosture
 - [Water content (Wikipedia)](https://en.wikipedia.org/wiki/Water_content)
 - [Soil mosture (Wikipedia)](https://en.wikipedia.org/wiki/Soil_moisture)
 - [Soil moisture sensors for irrigation scheduling](https://extension.umn.edu/irrigation/soil-moisture-sensors-irrigation-scheduling)
 - [Capacitive Soil Moisture Sensor Calibration with Arduino](https://makersportal.com/blog/2020/5/26/capacitive-soil-moisture-calibration-with-arduino)
 - [Measuring Soil Moisture with ADCs](https://circuitcellar.com/research-design-hub/measuring-soil-moisture-with-adcs/)
+
+#### LoRa communication
+- [The Best LoRa Settings for Range and Reliability](https://medium.com/home-wireless/testing-lora-radios-with-the-limesdr-mini-part-2-37fa481217ff)
