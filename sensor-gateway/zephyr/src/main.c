@@ -124,8 +124,7 @@ void main(void)
 	lv_label_set_text(ui_label_bottom, "[Vol Water Cont]");
 
 	lv_task_handler();
-	display_blanking_off(display_dev);
-
+	
 	// LORA
 	const struct device *const lora_dev = DEVICE_DT_GET(DEFAULT_RADIO_NODE);
 	struct lora_modem_config config;

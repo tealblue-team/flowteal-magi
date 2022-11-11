@@ -12,8 +12,10 @@ static const String sid;
 static char hex[19];
 
 static float voltage;
-static float vol_water_cont; // preallocate to approx. voltage and theta_v
+static float vol_water_cont;
 static int vol_water_cont_1e2;
+
+static int16_t packetnum = 1;  // packet counter
 
 void sensorPowerOn(void)
 {
@@ -75,8 +77,6 @@ void setup()
   Serial.print("Set Freq to: "); 
   Serial.println(RF95_FREQ);
 }
-
-int16_t packetnum = 0;  // packet counter, we increment per xmission
 
 void loop()
 {
