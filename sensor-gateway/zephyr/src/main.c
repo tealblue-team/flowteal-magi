@@ -12,7 +12,6 @@
 #include <zephyr/kernel.h>
 #include <zephyr/data/json.h>
 #include <lvgl.h>
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 
@@ -25,40 +24,52 @@ BUILD_ASSERT(DT_NODE_HAS_STATUS(DEFAULT_RADIO_NODE, okay),
 #define LOG_LEVEL CONFIG_LOG_DEFAULT_LEVEL
 LOG_MODULE_REGISTER(lora_receive);
 
-lv_obj_t *count_label;
-char count_str[16] = {0};	
-static int cnt = 0;
+#define SID_UI_LEN 7
+lv_obj_t *ui_label_top;
+lv_obj_t *ui_label_mid;
+lv_obj_t *ui_label_bottom;
+char sensor_str[SID_UI_LEN] = {0};	
+int cnt = 0;
 
 struct moisture {
+	char *sid;
 	int msgid;
 	int adc;
 	int V;
 	int vwc;
 	};
 struct json_obj_descr moisture_descr[] = {
+	JSON_OBJ_DESCR_PRIM(struct moisture, sid, JSON_TOK_STRING),
 	JSON_OBJ_DESCR_PRIM(struct moisture, msgid, JSON_TOK_NUMBER),
-	JSON_OBJ_DESCR_PRIM(struct moisture, adc, JSON_TOK_NUMBER), 
-	JSON_OBJ_DESCR_PRIM(struct moisture, V, JSON_TOK_NUMBER), 
+	//JSON_OBJ_DESCR_PRIM(struct moisture, adc, JSON_TOK_NUMBER), 
+	//JSON_OBJ_DESCR_PRIM(struct moisture, V, JSON_TOK_NUMBER), 
 	JSON_OBJ_DESCR_PRIM(struct moisture, vwc, JSON_TOK_NUMBER)
 	};
+
+
+int expected_ret_code = (1 << ARRAY_SIZE(moisture_descr)) - 1;
 
 void lora_receive_cb(const struct device *dev, uint8_t *data, uint16_t size,
 		     int16_t rssi, int8_t snr)
 {
 	ARG_UNUSED(dev);
-	ARG_UNUSED(size);
+
+	// Copy "data" since first 2 chars and last char are always junk
+
+ 	size_t start = 2;
+	size_t end = -1;
+	size_t size_proc = size-start+end;
+
+	char data_processed[size_proc];
+	for(size_t i = 0; i < size_proc; i++ )
+    	strcpy(data_processed+i,(char*)data+start+i+2);
+	data_processed[size_proc] = '\0';
 
 	LOG_INF("Message received (RSSI:%ddBm, SNR:%ddBm)",
 		rssi, snr);
-	for(size_t i = 0; i < size; i++ )
-	{
-		printf("%c", data[i]);
-	}
-	printf("\n");
 
 	struct moisture moisture_json;
-
-	int ret = json_obj_parse(data, sizeof(data),
+	int ret = json_obj_parse(data_processed, size_proc,
                 moisture_descr,
                 ARRAY_SIZE(moisture_descr),
                 &moisture_json);
@@ -67,32 +78,32 @@ void lora_receive_cb(const struct device *dev, uint8_t *data, uint16_t size,
 	{
 		LOG_ERR("JSON Parse Error: %d", ret);
 	}
+	else if (ret != expected_ret_code)
+	{
+		LOG_ERR("Not all values decoded; Expected return code %d but got %d", expected_ret_code, ret);
+	}
 	else
 	{
 		LOG_INF("json_obj_parse return code: %d", ret);
+		LOG_INF("sid: %s", moisture_json.sid);
 		LOG_INF("msgid: %d", moisture_json.msgid);
-		LOG_INF("adc: %d", moisture_json.adc);
-		LOG_INF("V: %d", moisture_json.V);
+		// LOG_INF("adc: %d", moisture_json.adc);
+		// LOG_INF("V: %d", moisture_json.V);
 		LOG_INF("vwc: %d", moisture_json.vwc);
 	}
 
 	++cnt;
-	sprintf(count_str, "Messages: %d", cnt);
-	lv_label_set_text(count_label, count_str);
+	strncpy(sensor_str, moisture_json.sid, SID_UI_LEN);
+	lv_label_set_text_fmt(ui_label_top, "sid: %s", sensor_str);
+	lv_label_set_text_fmt(ui_label_mid, "msgid: %d", moisture_json.msgid);
+	lv_label_set_text_fmt(ui_label_bottom, "vwc: %de-2", moisture_json.vwc);
 	lv_task_handler();
-	
-	/* Stop receiving after 10 packets */
-	// if (cnt == 10) {
-	// 	LOG_INF("Stopping packet receptions");
-	// 	lora_recv_async(dev, NULL);
-	// }
 }
 
 void main(void)
 {
 	// DISPLAY
 	const struct device *display_dev;
-	lv_obj_t *hello_world_label;
 
 	display_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_display));
 	if (!device_is_ready(display_dev)) {
@@ -100,30 +111,20 @@ void main(void)
 		return;
 	}
 
-	hello_world_label = lv_label_create(lv_scr_act());
+ 	ui_label_top = lv_label_create(lv_scr_act());
+	lv_obj_align(ui_label_top, LV_ALIGN_TOP_MID, 0, 0);
+	lv_label_set_text(ui_label_top, "[latest sensor]");
 
-	lv_label_set_text(hello_world_label, "LoRa receiver");
-	lv_obj_align(hello_world_label, LV_ALIGN_CENTER, 0, 0);
+	ui_label_mid = lv_label_create(lv_scr_act());
+	lv_obj_align(ui_label_mid, LV_ALIGN_CENTER, 0, 0);
+	lv_label_set_text(ui_label_mid, "[message id]");
 
-	count_label = lv_label_create(lv_scr_act());
-	lv_obj_align(count_label, LV_ALIGN_BOTTOM_MID, 0, 0);
-
-	sprintf(count_str, "Messages: %d", cnt);
-	lv_label_set_text(count_label, count_str);
+	ui_label_bottom = lv_label_create(lv_scr_act());
+	lv_obj_align(ui_label_bottom, LV_ALIGN_BOTTOM_MID, 0, 0);
+	lv_label_set_text(ui_label_bottom, "[Vol Water Cont]");
 
 	lv_task_handler();
 	display_blanking_off(display_dev);
-
-	// while (1) {
-	// 	if ((count % 100) == 0U) {
-	// 		sprintf(count_str, "%d", count/100U);
-	// 		lv_label_set_text(count_label, count_str);
-	// 	}
-	// 	lv_task_handler();
-	// 	++count;
-	// 	k_sleep(K_MSEC(10));
-	// }
-
 
 	// LORA
 	const struct device *const lora_dev = DEVICE_DT_GET(DEFAULT_RADIO_NODE);
@@ -153,22 +154,6 @@ void main(void)
 		LOG_ERR("LoRa config failed");
 		return;
 	}
-
-
-	/* Receive 4 packets synchronously */
-	// LOG_INF("Synchronous reception");
-	// for (int i = 0; i < 4; i++) {
-	// 	/* Block until data arrives */
-	// 	len = lora_recv(lora_dev, data, MAX_DATA_LEN, K_FOREVER,
-	// 			&rssi, &snr);
-	// 	if (len < 0) {
-	// 		LOG_ERR("LoRa receive failed");
-	// 		return;
-	// 	}
-
-	// 	LOG_INF("Received data: %s (RSSI:%ddBm, SNR:%ddBm)",
-	// 		data, rssi, snr);
-	// }
 
 	/* Enable asynchronous reception */
 	LOG_INF("Asynchronous reception");
