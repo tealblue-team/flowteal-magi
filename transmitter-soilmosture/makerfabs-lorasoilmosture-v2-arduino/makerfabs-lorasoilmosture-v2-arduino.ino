@@ -124,5 +124,5 @@ void loop()
   //Serial.println("Waiting for packet to complete..."); delay(10);
   rf95.waitPacketSent();
   //Serial.println("Packet sent"); delay(10);
-  delay(5000);
+  delay(30*60*1000);
 }
