@@ -1,5 +1,5 @@
 # Flowteal Magi
-An affordable solution (starting at USD$99) to optimize water usage and increase yield in home gardening and small-scale farming.
+An affordable solution (starting at USD$101) to optimize water usage and increase yield in home gardening and small-scale farming.
 
 ## How it works
 
@@ -10,12 +10,11 @@ Currently the solution consists of:
 
 ### Hardware
 - One WiFi-enabled controller for latching (bi-stable) electrovalves. Currently supported:
-    -  [OpenSprinkler Bee](https://opensprinkler.com/product/opensprinkler-bee/) $58
+    -  [OpenSprinkler Bee](https://opensprinkler.com/product/opensprinkler-bee/) $62
 - One or more LoRa wireless soil moisture sensors. Currently supported:
-    -  [MakerFabs LoRa Soil Moisture Sensor v2](https://www.makerfabs.com/lora-soil-moisture-sensor-v2.html) $17
+    -  [MakerFabs LoRa Soil Moisture Sensor v2](https://www.makerfabs.com/lora-soil-moisture-sensor-v2.html) $19.90
 - One LoRa + WiFi gateway. Currently supported:
-    -  [Heltec WiFi LoRa 32 v2](https://heltec.org/project/wifi-lora-32/) $18
-- Boxes and cables $6
+    -  [Heltec WiFi LoRa 32 v2](https://heltec.org/project/wifi-lora-32/) $18.80
 
 ### Software
 - Flowteal Magi tools - free and open source!
