@@ -1,11 +1,5 @@
-/*
- * Copyright (c) 2020 Gerson Fernando Budke <nandojve@gmail.com>
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(tagoio_http_post, CONFIG_TAGOIO_HTTP_POST_LOG_LEVEL);
+LOG_MODULE_REGISTER(tagoio_http_post, CONFIG_SPRINKLER_HTTP_POST_LOG_LEVEL);
 
 #include <zephyr/kernel.h>
 #include <zephyr/net/socket.h>
@@ -16,7 +10,7 @@ LOG_MODULE_REGISTER(tagoio_http_post, CONFIG_TAGOIO_HTTP_POST_LOG_LEVEL);
 #include "wifi.h"
 #include "sockets.h"
 
-static struct tagoio_context ctx;
+static struct sprinkler_context ctx;
 
 static void response_cb(struct http_response *rsp,
 			enum http_final_call final_data,
@@ -61,12 +55,12 @@ static void next_turn(void)
 		return;
 	}
 
-	if (tagoio_connect(&ctx) < 0) {
+	if (sprinkler_connect(&ctx) < 0) {
 		LOG_INF("No connection available.");
 		return;
 	}
 
-	if (tagoio_http_push(&ctx, response_cb) < 0) {
+	if (sprinkler_http_push(&ctx, response_cb) < 0) {
 		LOG_INF("Error pushing data.");
 		return;
 	}
@@ -81,6 +75,6 @@ void main(void)
 	while (true) {
 		next_turn();
 
-		k_sleep(K_SECONDS(CONFIG_TAGOIO_HTTP_PUSH_INTERVAL));
+		k_sleep(K_SECONDS(CONFIG_SPRINKLER_HTTP_PUSH_INTERVAL));
 	}
 }

@@ -1,3 +1,4 @@
 *build
 *.vscode
 *wifi-data.conf
+*tagoio_http_post

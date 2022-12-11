@@ -1,11 +1,5 @@
-/*
- * Copyright (c) 2020 Gerson Fernando Budke <nandojve@gmail.com>
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 #include <zephyr/logging/log.h>
-LOG_MODULE_DECLARE(tagoio_http_post, CONFIG_TAGOIO_HTTP_POST_LOG_LEVEL);
+LOG_MODULE_DECLARE(tagoio_http_post, CONFIG_SPRINKLER_HTTP_POST_LOG_LEVEL);
 
 #include <zephyr/net/net_ip.h>
 #include <zephyr/net/socket.h>
@@ -16,23 +10,23 @@ LOG_MODULE_DECLARE(tagoio_http_post, CONFIG_TAGOIO_HTTP_POST_LOG_LEVEL);
 
 #include "sockets.h"
 
-#if IS_ENABLED(CONFIG_TAGOIO_MANUAL_SERVER)
-#define TAGOIO_SERVER CONFIG_TAGOIO_API_SERVER_IP
+#if IS_ENABLED(CONFIG_SPRINKLER_MANUAL_SERVER)
+#define SPRINKLER_SERVER CONFIG_SPRINKLER_API_SERVER_IP
 #else
-#define TAGOIO_SERVER "api.tago.io"
+#define SPRINKLER_SERVER "api.tago.io"
 #endif
 
-#define TAGOIO_URL          "/data"
+#define SPRINKLER_URL          "/data"
 #define HTTP_PORT           "80"
 
-static const char *tagoio_http_headers[] = {
-	"Device-Token: " CONFIG_TAGOIO_DEVICE_TOKEN "\r\n",
+static const char *sprinkler_http_headers[] = {
+	"Device-Token: " CONFIG_SPRINKLER_DEVICE_TOKEN "\r\n",
 	"Content-Type: application/json\r\n",
 	"_ssl: false\r\n",
 	NULL
 };
 
-int tagoio_connect(struct tagoio_context *ctx)
+int sprinkler_connect(struct sprinkler_context *ctx)
 {
 	struct addrinfo *addr;
 	struct addrinfo hints;
@@ -53,7 +47,7 @@ int tagoio_connect(struct tagoio_context *ctx)
 	port = HTTP_PORT;
 
 	while (dns_attempts--) {
-		ret = getaddrinfo(TAGOIO_SERVER, port, &hints, &addr);
+		ret = getaddrinfo(SPRINKLER_SERVER, port, &hints, &addr);
 		if (ret == 0) {
 			break;
 		}
@@ -97,7 +91,7 @@ int tagoio_connect(struct tagoio_context *ctx)
 	return 0;
 }
 
-int tagoio_http_push(struct tagoio_context *ctx,
+int sprinkler_http_push(struct sprinkler_context *ctx,
 		     http_response_cb_t resp_cb)
 {
 	struct http_request req;
@@ -106,10 +100,10 @@ int tagoio_http_push(struct tagoio_context *ctx,
 	memset(&req, 0, sizeof(req));
 
 	req.method		= HTTP_POST;
-	req.host		= TAGOIO_SERVER;
+	req.host		= SPRINKLER_SERVER;
 	req.port		= HTTP_PORT;
-	req.url			= TAGOIO_URL;
-	req.header_fields	= tagoio_http_headers;
+	req.url			= SPRINKLER_URL;
+	req.header_fields	= sprinkler_http_headers;
 	req.protocol		= "HTTP/1.1";
 	req.response		= resp_cb;
 	req.payload		= ctx->payload;
@@ -118,7 +112,7 @@ int tagoio_http_push(struct tagoio_context *ctx,
 	req.recv_buf_len	= sizeof(ctx->resp);
 
 	ret = http_client_req(ctx->sock, &req,
-			      CONFIG_TAGOIO_HTTP_CONN_TIMEOUT * MSEC_PER_SEC,
+			      CONFIG_SPRINKLER_HTTP_CONN_TIMEOUT * MSEC_PER_SEC,
 			      ctx);
 
 	close(ctx->sock);

@@ -1,11 +1,5 @@
-/*
- * Copyright (c) 2020 Gerson Fernando Budke <nandojve@gmail.com>
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 #include <zephyr/logging/log.h>
-LOG_MODULE_DECLARE(tagoio_http_post, CONFIG_TAGOIO_HTTP_POST_LOG_LEVEL);
+LOG_MODULE_DECLARE(tagoio_http_post, CONFIG_SPRINKLER_HTTP_POST_LOG_LEVEL);
 
 #include <zephyr/net/wifi_mgmt.h>
 
@@ -50,22 +44,22 @@ void wifi_connect(void)
 
 	struct net_if *iface = net_if_get_default();
 	static struct wifi_connect_req_params cnx_params = {
-		.ssid = CONFIG_TAGOIO_HTTP_WIFI_SSID,
+		.ssid = CONFIG_SPRINKLER_HTTP_WIFI_SSID,
 		.ssid_length = 0,
-		.psk = CONFIG_TAGOIO_HTTP_WIFI_PSK,
+		.psk = CONFIG_SPRINKLER_HTTP_WIFI_PSK,
 		.psk_length = 0,
 		.channel = 0,
 		.security = WIFI_SECURITY_TYPE_PSK,
 	};
 
-	cnx_params.ssid_length = strlen(CONFIG_TAGOIO_HTTP_WIFI_SSID);
-	cnx_params.psk_length = strlen(CONFIG_TAGOIO_HTTP_WIFI_PSK);
+	cnx_params.ssid_length = strlen(CONFIG_SPRINKLER_HTTP_WIFI_SSID);
+	cnx_params.psk_length = strlen(CONFIG_SPRINKLER_HTTP_WIFI_PSK);
 
 	connected = 0;
 
-	LOG_INF("WIFI try connecting to %s...", CONFIG_TAGOIO_HTTP_WIFI_SSID);
+	LOG_INF("WIFI try connecting to %s...", CONFIG_SPRINKLER_HTTP_WIFI_SSID);
 
-	/* Let's wait few seconds to allow wifi device be on-line */
+	/* Let's wait a few seconds to allow the wifi device to be on-line */
 	while (nr_tries-- > 0) {
 		ret = net_mgmt(NET_REQUEST_WIFI_CONNECT, iface, &cnx_params,
 			       sizeof(struct wifi_connect_req_params));
