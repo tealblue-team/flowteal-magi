@@ -1,7 +1,9 @@
 #include <zephyr/logging/log.h>
-LOG_MODULE_DECLARE(tagoio_http_post, CONFIG_SPRINKLER_HTTP_POST_LOG_LEVEL);
+LOG_MODULE_DECLARE(flowteal_magi_sensors_gateway, CONFIG_SPRINKLER_HTTP_POST_LOG_LEVEL);
 
 #include <zephyr/net/wifi_mgmt.h>
+
+#include "wifi.h"
 
 static int connected;
 static struct net_mgmt_event_callback wifi_shell_mgmt_cb;

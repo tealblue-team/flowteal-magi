@@ -1,5 +1,5 @@
 #include <zephyr/logging/log.h>
-LOG_MODULE_DECLARE(tagoio_http_post, CONFIG_SPRINKLER_HTTP_POST_LOG_LEVEL);
+LOG_MODULE_DECLARE(flowteal_magi_sensors_gateway, CONFIG_SPRINKLER_HTTP_POST_LOG_LEVEL);
 
 #include <zephyr/net/net_ip.h>
 #include <zephyr/net/socket.h>

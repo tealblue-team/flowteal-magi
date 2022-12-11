@@ -5,5 +5,10 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(flowteal-magi-sensor-gateway-zephyr)
 
 target_sources(app PRIVATE src/main.c)
+
 target_sources(app PRIVATE src/sockets.c)
 target_sources(app PRIVATE src/wifi.c)
+
+target_sources(app PRIVATE src/lora.c)
+
+#target_sources(app PRIVATE src/display.c)
